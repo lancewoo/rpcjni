@@ -9,24 +9,6 @@ import org.bytedeco.javacpp.annotation.*;
 public class ShotSync extends com.senter.shotsync.NativeLibraryConfig {
     static { Loader.load(); }
 
-// Parsed from RpcImpl.h
-
-// #ifndef CAMERASHOTSYNC_RPCIMPL_H
-// #define CAMERASHOTSYNC_RPCIMPL_H
-// #ifdef __cplusplus
-// #endif
-
-// #include "libstc-rpc/include/stc_rpc.h"
-
-    @Namespace("client") public static native void ClientSetMessageHandler(@ByVal rpc_handler_t userHandler);
-
-
-
-// #ifdef __cplusplus
-// #endif
-// #endif //CAMERASHOTSYNC_RPCIMPL_H
-
-
 // Parsed from stc_rpc.h
 
 /**

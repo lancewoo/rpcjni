@@ -8,7 +8,7 @@ extern "C" {
 
 namespace client {
 
-//    void ClientSetMessageHandler(rpc_handler_t userHandler);
+    void ClientSetMessageHandler(rpc_handler_t userHandler);
 
 }
 
