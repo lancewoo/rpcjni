@@ -10,11 +10,12 @@ import org.bytedeco.javacpp.tools.InfoMapper;
         // It's important that dependency headers go first, check https://github.com/bytedeco/javacpp/wiki/Mapping-Recipes#including-multiple-header-files
         value = @Platform(
                 cinclude = {
-                        "stc_rpc.h"
-                },
-                include = {
+                        "stc_rpc.h",
                         "RpcImpl.h"
                 },
+//                include = {
+//                        "RpcImpl.h"
+//                },
                 // 指定的是加载时JNI库的名称和生成的C++代码的文件名，比如jniVsEngine对应libjniVsEngine.so
                 library = "ShotSync"),
         target = "com.senter.shotsync.ShotSync"

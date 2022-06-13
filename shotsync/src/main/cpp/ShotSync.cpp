@@ -96,10 +96,9 @@
     #define JavaCPP_override
 #endif
 
-#include "RpcImpl.h"
-
 extern "C" {
 #include "stc_rpc.h"
+#include "RpcImpl.h"
 }
 
 static JavaVM* JavaCPP_vm = NULL;
@@ -494,7 +493,7 @@ static const char* JavaCPP_members[16][5] = {
         { NULL },
         { NULL },
         { NULL },
-        { "sizeof", "header", "reply", "reply_marker" },
+        { "sizeof", "header", "reply_marker", "reply" },
         { NULL },
         { NULL },
         { NULL } };
@@ -511,7 +510,7 @@ static int JavaCPP_offsets[16][5] = {
         { -1 },
         { -1 },
         { -1 },
-        { sizeof(::rpc_request_t), offsetof(::rpc_request_t, header), offsetof(::rpc_request_t, reply), offsetof(::rpc_request_t, reply_marker) },
+        { sizeof(::rpc_request_t), offsetof(::rpc_request_t, header), offsetof(::rpc_request_t, reply_marker), offsetof(::rpc_request_t, reply) },
         { -1 },
         { -1 },
         { -1 } };
@@ -859,6 +858,25 @@ JNIEXPORT void JNICALL Java_com_senter_shotsync_ShotSync_00024rpc_1request_1t_al
         env->Throw(exc);
     }
 }
+JNIEXPORT jobject JNICALL Java_com_senter_shotsync_ShotSync_00024rpc_1request_1t_header__Lcom_senter_shotsync_ShotSync_00024rpc_1request_1hdr_1t_2(JNIEnv* env, jobject obj, jobject arg0) {
+    ::rpc_request_t* ptr = (::rpc_request_t*)jlong_to_ptr(env->GetLongField(obj, JavaCPP_addressFID));
+    if (ptr == NULL) {
+        env->ThrowNew(JavaCPP_getClass(env, 10), "This pointer address is NULL.");
+        return 0;
+    }
+    jlong position = env->GetLongField(obj, JavaCPP_positionFID);
+    ptr += position;
+    ::rpc_request_hdr_t* ptr0 = arg0 == NULL ? NULL : (::rpc_request_hdr_t*)jlong_to_ptr(env->GetLongField(arg0, JavaCPP_addressFID));
+    if (ptr0 == NULL) {
+        env->ThrowNew(JavaCPP_getClass(env, 10), "Pointer address of argument 0 is NULL.");
+        return 0;
+    }
+    jlong position0 = arg0 == NULL ? 0 : env->GetLongField(arg0, JavaCPP_positionFID);
+    ptr0 += position0;
+    jobject rarg = obj;
+    ptr->header = *ptr0;
+    return rarg;
+}
 JNIEXPORT jobject JNICALL Java_com_senter_shotsync_ShotSync_00024rpc_1request_1t_header__(JNIEnv* env, jobject obj) {
     ::rpc_request_t* ptr = (::rpc_request_t*)jlong_to_ptr(env->GetLongField(obj, JavaCPP_addressFID));
     if (ptr == NULL) {
@@ -878,7 +896,7 @@ JNIEXPORT jobject JNICALL Java_com_senter_shotsync_ShotSync_00024rpc_1request_1t
     }
     return rarg;
 }
-JNIEXPORT jobject JNICALL Java_com_senter_shotsync_ShotSync_00024rpc_1request_1t_header__Lcom_senter_shotsync_ShotSync_00024rpc_1request_1hdr_1t_2(JNIEnv* env, jobject obj, jobject arg0) {
+JNIEXPORT jobject JNICALL Java_com_senter_shotsync_ShotSync_00024rpc_1request_1t_reply_1marker__(JNIEnv* env, jobject obj) {
     ::rpc_request_t* ptr = (::rpc_request_t*)jlong_to_ptr(env->GetLongField(obj, JavaCPP_addressFID));
     if (ptr == NULL) {
         env->ThrowNew(JavaCPP_getClass(env, 10), "This pointer address is NULL.");
@@ -886,15 +904,30 @@ JNIEXPORT jobject JNICALL Java_com_senter_shotsync_ShotSync_00024rpc_1request_1t
     }
     jlong position = env->GetLongField(obj, JavaCPP_positionFID);
     ptr += position;
-    ::rpc_request_hdr_t* ptr0 = arg0 == NULL ? NULL : (::rpc_request_hdr_t*)jlong_to_ptr(env->GetLongField(arg0, JavaCPP_addressFID));
-    if (ptr0 == NULL) {
-        env->ThrowNew(JavaCPP_getClass(env, 10), "Pointer address of argument 0 is NULL.");
+    jobject rarg = NULL;
+    int* rptr;
+    rptr = ptr->reply_marker;
+    if (rptr != NULL) {
+        rarg = JavaCPP_createPointer(env, 13);
+        if (rarg != NULL) {
+            env->SetLongField(rarg, JavaCPP_addressFID, ptr_to_jlong(rptr));
+        }
+    }
+    return rarg;
+}
+JNIEXPORT jobject JNICALL Java_com_senter_shotsync_ShotSync_00024rpc_1request_1t_reply_1marker__Lorg_bytedeco_javacpp_IntPointer_2(JNIEnv* env, jobject obj, jobject arg0) {
+    ::rpc_request_t* ptr = (::rpc_request_t*)jlong_to_ptr(env->GetLongField(obj, JavaCPP_addressFID));
+    if (ptr == NULL) {
+        env->ThrowNew(JavaCPP_getClass(env, 10), "This pointer address is NULL.");
         return 0;
     }
+    jlong position = env->GetLongField(obj, JavaCPP_positionFID);
+    ptr += position;
+    int* ptr0 = arg0 == NULL ? NULL : (int*)jlong_to_ptr(env->GetLongField(arg0, JavaCPP_addressFID));
     jlong position0 = arg0 == NULL ? 0 : env->GetLongField(arg0, JavaCPP_positionFID);
     ptr0 += position0;
     jobject rarg = obj;
-    ptr->header = *ptr0;
+    ptr->reply_marker = ptr0;
     return rarg;
 }
 JNIEXPORT jobject JNICALL Java_com_senter_shotsync_ShotSync_00024rpc_1request_1t_reply__Lcom_senter_shotsync_ShotSync_00024rpc_1reply_1t_2(JNIEnv* env, jobject obj, jobject arg0) {
@@ -948,40 +981,6 @@ JNIEXPORT void JNICALL Java_com_senter_shotsync_ShotSync_00024rpc_1request_1t_al
     if (exc != NULL) {
         env->Throw(exc);
     }
-}
-JNIEXPORT jobject JNICALL Java_com_senter_shotsync_ShotSync_00024rpc_1request_1t_reply_1marker__Lorg_bytedeco_javacpp_IntPointer_2(JNIEnv* env, jobject obj, jobject arg0) {
-    ::rpc_request_t* ptr = (::rpc_request_t*)jlong_to_ptr(env->GetLongField(obj, JavaCPP_addressFID));
-    if (ptr == NULL) {
-        env->ThrowNew(JavaCPP_getClass(env, 10), "This pointer address is NULL.");
-        return 0;
-    }
-    jlong position = env->GetLongField(obj, JavaCPP_positionFID);
-    ptr += position;
-    int* ptr0 = arg0 == NULL ? NULL : (int*)jlong_to_ptr(env->GetLongField(arg0, JavaCPP_addressFID));
-    jlong position0 = arg0 == NULL ? 0 : env->GetLongField(arg0, JavaCPP_positionFID);
-    ptr0 += position0;
-    jobject rarg = obj;
-    ptr->reply_marker = ptr0;
-    return rarg;
-}
-JNIEXPORT jobject JNICALL Java_com_senter_shotsync_ShotSync_00024rpc_1request_1t_reply_1marker__(JNIEnv* env, jobject obj) {
-    ::rpc_request_t* ptr = (::rpc_request_t*)jlong_to_ptr(env->GetLongField(obj, JavaCPP_addressFID));
-    if (ptr == NULL) {
-        env->ThrowNew(JavaCPP_getClass(env, 10), "This pointer address is NULL.");
-        return 0;
-    }
-    jlong position = env->GetLongField(obj, JavaCPP_positionFID);
-    ptr += position;
-    jobject rarg = NULL;
-    int* rptr;
-    rptr = ptr->reply_marker;
-    if (rptr != NULL) {
-        rarg = JavaCPP_createPointer(env, 13);
-        if (rarg != NULL) {
-            env->SetLongField(rarg, JavaCPP_addressFID, ptr_to_jlong(rptr));
-        }
-    }
-    return rarg;
 }
 
 JNIEXPORT jobject JNICALL Java_com_senter_shotsync_ShotSync_00024rpc_1reply_1t_buffer__(JNIEnv* env, jobject obj) {
@@ -1180,16 +1179,38 @@ JNIEXPORT void JNICALL Java_com_senter_shotsync_ShotSync_00024rpc_1request_1hdr_
     }
 }
 
-JNIEXPORT jobject JNICALL Java_com_senter_shotsync_ShotSync_rpc_1alloc(JNIEnv* env, jclass cls) {
-    jobject rarg = NULL;
-    ::rpc_t* rptr;
-    rptr = rpc_alloc();
-    if (rptr != NULL) {
-        rarg = JavaCPP_createPointer(env, 15);
-        if (rarg != NULL) {
-            env->SetLongField(rarg, JavaCPP_addressFID, ptr_to_jlong(rptr));
-        }
-    }
+JNIEXPORT jint JNICALL Java_com_senter_shotsync_ShotSync_rpc_1stop(JNIEnv* env, jclass cls, jobject arg0) {
+    ::rpc_t* ptr0 = arg0 == NULL ? NULL : (::rpc_t*)jlong_to_ptr(env->GetLongField(arg0, JavaCPP_addressFID));
+    jint rarg = 0;
+    int rval = rpc_stop(ptr0);
+    rarg = (jint)rval;
+    return rarg;
+}
+JNIEXPORT jint JNICALL Java_com_senter_shotsync_ShotSync_rpc_1start(JNIEnv* env, jclass cls, jobject arg0) {
+    ::rpc_t* ptr0 = arg0 == NULL ? NULL : (::rpc_t*)jlong_to_ptr(env->GetLongField(arg0, JavaCPP_addressFID));
+    jint rarg = 0;
+    int rval = rpc_start(ptr0);
+    rarg = (jint)rval;
+    return rarg;
+}
+JNIEXPORT jint JNICALL Java_com_senter_shotsync_ShotSync_rpc_1call_1noreply(JNIEnv* env, jclass cls, jobject arg0, jobject arg1) {
+    ::rpc_t* ptr0 = arg0 == NULL ? NULL : (::rpc_t*)jlong_to_ptr(env->GetLongField(arg0, JavaCPP_addressFID));
+    ::rpc_request_t* ptr1 = arg1 == NULL ? NULL : (::rpc_request_t*)jlong_to_ptr(env->GetLongField(arg1, JavaCPP_addressFID));
+    jlong position1 = arg1 == NULL ? 0 : env->GetLongField(arg1, JavaCPP_positionFID);
+    ptr1 += position1;
+    jint rarg = 0;
+    int rval = rpc_call_noreply(ptr0, ptr1);
+    rarg = (jint)rval;
+    return rarg;
+}
+JNIEXPORT jint JNICALL Java_com_senter_shotsync_ShotSync_rpc_1call(JNIEnv* env, jclass cls, jobject arg0, jobject arg1) {
+    ::rpc_t* ptr0 = arg0 == NULL ? NULL : (::rpc_t*)jlong_to_ptr(env->GetLongField(arg0, JavaCPP_addressFID));
+    ::rpc_request_t* ptr1 = arg1 == NULL ? NULL : (::rpc_request_t*)jlong_to_ptr(env->GetLongField(arg1, JavaCPP_addressFID));
+    jlong position1 = arg1 == NULL ? 0 : env->GetLongField(arg1, JavaCPP_positionFID);
+    ptr1 += position1;
+    jint rarg = 0;
+    int rval = rpc_call(ptr0, ptr1);
+    rarg = (jint)rval;
     return rarg;
 }
 JNIEXPORT void JNICALL Java_com_senter_shotsync_ShotSync_rpc_1free(JNIEnv* env, jclass cls, jobject arg0) {
@@ -1206,58 +1227,23 @@ JNIEXPORT jint JNICALL Java_com_senter_shotsync_ShotSync_rpc_1init(JNIEnv* env, 
     rarg = (jint)rval;
     return rarg;
 }
-JNIEXPORT jint JNICALL Java_com_senter_shotsync_ShotSync_rpc_1call(JNIEnv* env, jclass cls, jobject arg0, jobject arg1) {
-    ::rpc_t* ptr0 = arg0 == NULL ? NULL : (::rpc_t*)jlong_to_ptr(env->GetLongField(arg0, JavaCPP_addressFID));
-    ::rpc_request_t* ptr1 = arg1 == NULL ? NULL : (::rpc_request_t*)jlong_to_ptr(env->GetLongField(arg1, JavaCPP_addressFID));
-    jlong position1 = arg1 == NULL ? 0 : env->GetLongField(arg1, JavaCPP_positionFID);
-    ptr1 += position1;
-    jint rarg = 0;
-    int rval = rpc_call(ptr0, ptr1);
-    rarg = (jint)rval;
-    return rarg;
-}
-JNIEXPORT jint JNICALL Java_com_senter_shotsync_ShotSync_rpc_1call_1noreply(JNIEnv* env, jclass cls, jobject arg0, jobject arg1) {
-    ::rpc_t* ptr0 = arg0 == NULL ? NULL : (::rpc_t*)jlong_to_ptr(env->GetLongField(arg0, JavaCPP_addressFID));
-    ::rpc_request_t* ptr1 = arg1 == NULL ? NULL : (::rpc_request_t*)jlong_to_ptr(env->GetLongField(arg1, JavaCPP_addressFID));
-    jlong position1 = arg1 == NULL ? 0 : env->GetLongField(arg1, JavaCPP_positionFID);
-    ptr1 += position1;
-    jint rarg = 0;
-    int rval = rpc_call_noreply(ptr0, ptr1);
-    rarg = (jint)rval;
-    return rarg;
-}
-JNIEXPORT jint JNICALL Java_com_senter_shotsync_ShotSync_rpc_1start(JNIEnv* env, jclass cls, jobject arg0) {
-    ::rpc_t* ptr0 = arg0 == NULL ? NULL : (::rpc_t*)jlong_to_ptr(env->GetLongField(arg0, JavaCPP_addressFID));
-    jint rarg = 0;
-    int rval = rpc_start(ptr0);
-    rarg = (jint)rval;
-    return rarg;
-}
-JNIEXPORT jint JNICALL Java_com_senter_shotsync_ShotSync_rpc_1stop(JNIEnv* env, jclass cls, jobject arg0) {
-    ::rpc_t* ptr0 = arg0 == NULL ? NULL : (::rpc_t*)jlong_to_ptr(env->GetLongField(arg0, JavaCPP_addressFID));
-    jint rarg = 0;
-    int rval = rpc_stop(ptr0);
-    rarg = (jint)rval;
+JNIEXPORT jobject JNICALL Java_com_senter_shotsync_ShotSync_rpc_1alloc(JNIEnv* env, jclass cls) {
+    jobject rarg = NULL;
+    ::rpc_t* rptr;
+    rptr = rpc_alloc();
+    if (rptr != NULL) {
+        rarg = JavaCPP_createPointer(env, 15);
+        if (rarg != NULL) {
+            env->SetLongField(rarg, JavaCPP_addressFID, ptr_to_jlong(rptr));
+        }
+    }
     return rarg;
 }
 JNIEXPORT void JNICALL Java_com_senter_shotsync_ShotSync_ClientSetMessageHandler(JNIEnv* env, jclass cls, jobject arg0) {
     JavaCPP_com_senter_shotsync_ShotSync_00024rpc_1handler_1t* ptr0 = arg0 == NULL ? NULL : (JavaCPP_com_senter_shotsync_ShotSync_00024rpc_1handler_1t*)jlong_to_ptr(env->GetLongField(arg0, JavaCPP_addressFID));
-    if (ptr0 == NULL) {
-        env->ThrowNew(JavaCPP_getClass(env, 10), "Pointer address of argument 0 is NULL.");
-        return;
-    }
     jlong position0 = arg0 == NULL ? 0 : env->GetLongField(arg0, JavaCPP_positionFID);
     ptr0 += position0;
-    jthrowable exc = NULL;
-    try {
-        client::ClientSetMessageHandler(*ptr0);
-    } catch (...) {
-        exc = JavaCPP_handleException(env, 11);
-    }
-
-    if (exc != NULL) {
-        env->Throw(exc);
-    }
+    client::ClientSetMessageHandler((ptr0 == NULL ? NULL : ptr0->ptr));
 }
 
 }

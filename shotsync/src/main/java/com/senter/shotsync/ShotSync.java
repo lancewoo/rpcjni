@@ -9,24 +9,6 @@ import org.bytedeco.javacpp.annotation.*;
 public class ShotSync extends com.senter.shotsync.NativeLibraryConfig {
     static { Loader.load(); }
 
-// Parsed from RpcImpl.h
-
-// #ifndef CAMERASHOTSYNC_RPCIMPL_H
-// #define CAMERASHOTSYNC_RPCIMPL_H
-// #ifdef __cplusplus
-// #endif
-
-// #include "libstc-rpc/include/stc_rpc.h"
-
-    @Namespace("client") public static native void ClientSetMessageHandler(@ByVal rpc_handler_t userHandler);
-
-
-
-// #ifdef __cplusplus
-// #endif
-// #endif //CAMERASHOTSYNC_RPCIMPL_H
-
-
 // Parsed from stc_rpc.h
 
 /**
@@ -262,6 +244,24 @@ public static class rpc_handler_t extends FunctionPointer {
 @NoException public static native int rpc_stop(rpc_t rpc);
 
 // #endif //__STC_RPC_H__
+
+
+// Parsed from RpcImpl.h
+
+// #ifndef CAMERASHOTSYNC_RPCIMPL_H
+// #define CAMERASHOTSYNC_RPCIMPL_H
+// #ifdef __cplusplus
+// #endif
+
+// #include "libstc-rpc/include/stc_rpc.h"
+
+    @Namespace("client") @NoException public static native void ClientSetMessageHandler(rpc_handler_t userHandler);
+
+
+
+// #ifdef __cplusplus
+// #endif
+// #endif //CAMERASHOTSYNC_RPCIMPL_H
 
 
 }
