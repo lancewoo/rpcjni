@@ -13,7 +13,7 @@ import org.bytedeco.javacpp.tools.InfoMapper;
                         "stc_rpc.h"
                 },
                 include = {
-//                        "RpcImpl.h"
+                        "RpcImpl.h"
                 },
                 // 指定的是加载时JNI库的名称和生成的C++代码的文件名，比如jniVsEngine对应libjniVsEngine.so
                 library = "ShotSync"),

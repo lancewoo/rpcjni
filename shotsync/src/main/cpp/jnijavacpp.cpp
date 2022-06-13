@@ -933,6 +933,12 @@ JNIEXPORT jint JNICALL Java_org_bytedeco_javacpp_Loader_totalProcessors(JNIEnv* 
     rarg = (jint)rval;
     return rarg;
 }
+JNIEXPORT jint JNICALL Java_org_bytedeco_javacpp_Loader_totalCores(JNIEnv* env, jclass cls) {
+    jint rarg = 0;
+    int rval = JavaCPP_totalCores();
+    rarg = (jint)rval;
+    return rarg;
+}
 JNIEXPORT jint JNICALL Java_org_bytedeco_javacpp_Loader_totalChips(JNIEnv* env, jclass cls) {
     jint rarg = 0;
     int rval = JavaCPP_totalChips();
@@ -953,6 +959,11 @@ JNIEXPORT jobject JNICALL Java_org_bytedeco_javacpp_Loader_addressof(JNIEnv* env
     JavaCPP_releaseStringBytes(env, arg0, ptr0);
     return rarg;
 }
+JNIEXPORT void JNICALL Java_org_bytedeco_javacpp_Loader_loadGlobal(JNIEnv* env, jclass cls, jstring arg0) {
+    const char* ptr0 = JavaCPP_getStringBytes(env, arg0);
+    JavaCPP_loadGlobal(env, cls, ptr0);
+    JavaCPP_releaseStringBytes(env, arg0, ptr0);
+}
 JNIEXPORT jobject JNICALL Java_org_bytedeco_javacpp_Loader_getJavaVM(JNIEnv* env, jclass cls) {
     jobject rarg = NULL;
     JavaVM* rptr;
@@ -963,17 +974,6 @@ JNIEXPORT jobject JNICALL Java_org_bytedeco_javacpp_Loader_getJavaVM(JNIEnv* env
             env->SetLongField(rarg, JavaCPP_addressFID, ptr_to_jlong(rptr));
         }
     }
-    return rarg;
-}
-JNIEXPORT void JNICALL Java_org_bytedeco_javacpp_Loader_loadGlobal(JNIEnv* env, jclass cls, jstring arg0) {
-    const char* ptr0 = JavaCPP_getStringBytes(env, arg0);
-    JavaCPP_loadGlobal(env, cls, ptr0);
-    JavaCPP_releaseStringBytes(env, arg0, ptr0);
-}
-JNIEXPORT jint JNICALL Java_org_bytedeco_javacpp_Loader_totalCores(JNIEnv* env, jclass cls) {
-    jint rarg = 0;
-    int rval = JavaCPP_totalCores();
-    rarg = (jint)rval;
     return rarg;
 }
 
