@@ -11,11 +11,10 @@ import org.bytedeco.javacpp.tools.InfoMapper;
         value = @Platform(
                 cinclude = {
                         "stc_rpc.h",
+                },
+                include = {
                         "RpcImpl.h"
                 },
-//                include = {
-//                        "RpcImpl.h"
-//                },
                 // 指定的是加载时JNI库的名称和生成的C++代码的文件名，比如jniVsEngine对应libjniVsEngine.so
                 library = "ShotSync"),
         target = "com.senter.shotsync.ShotSync"
