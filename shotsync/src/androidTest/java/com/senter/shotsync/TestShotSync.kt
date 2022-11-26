@@ -9,10 +9,11 @@ class TestShotSync {
 
     @Test
     fun testFunctionPointer() {
-        for (i in 1..20) {
+        for (i in 1..50) {
             val handler = ShotSync.rpc_handler_t()
             println("ClientSetMessageHandler No. $i $handler")
             ShotSync.ClientSetMessageHandler(handler)
+            handler.deallocate()
         }
     }
 }
